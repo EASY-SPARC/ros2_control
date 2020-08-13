@@ -21,6 +21,7 @@
 #include "hardware_interface/macros.hpp"
 #include "hardware_interface/operation_mode_handle.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "rcutils/logging_macros.h"
 
 namespace
 {
@@ -243,10 +244,8 @@ hardware_interface_ret_t RobotHardware::register_actuator(
       ivs.values.push_back(default_value);
       return return_type::OK;
     } else {
-      RCLCPP_ERROR_STREAM(
-        rclcpp::get_logger(kActuatorLoggerName), "actuator with interface (" <<
-          actuator_name << ":" << interface_name <<
-          ") is already registered!");
+      RCLCPP_ERROR(
+        rclcpp::get_logger(kActuatorLoggerName), "actuator with interface (%s:%s) is already registered!",actuator_name,interface_name);
       return return_type::ERROR;
     }
   }
@@ -282,9 +281,9 @@ hardware_interface_ret_t RobotHardware::get_actuator_handle(ActuatorHandle & act
     actuator_handle = actuator_handle.with_value_ptr(&(ivs.values[value_index]));
     return return_type::OK;
   } else {
-    RCLCPP_ERROR_STREAM(
+    RCLCPP_ERROR(
       rclcpp::get_logger(kActuatorLoggerName),
-      "actuator with interface (" << actuator_name << ":" << interface_name << ") wasn't found!");
+      "actuator with interface (%s:%s) wasn't found!",actuator_name,interface_name);
     return return_type::ERROR;
   }
 

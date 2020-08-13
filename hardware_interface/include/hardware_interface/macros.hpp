@@ -17,8 +17,7 @@
 
 #include <stdexcept>
 #include <string>
-
-#include "rcpputils/pointer_traits.hpp"
+#include <type_traits>
 
 #ifdef _WIN32
 #define __PRETTY_FUNCTION__ __FUNCTION__
@@ -26,7 +25,7 @@
 
 #define THROW_ON_NULLPTR(pointer) \
   static_assert( \
-    rcpputils::is_pointer<std::remove_reference<decltype(pointer)>::type>::value, \
+    std::is_pointer<std::remove_reference<decltype(pointer)>::type>::value, \
     #pointer " has to be a pointer"); \
   if (!pointer) { \
     throw std::runtime_error( \
@@ -35,7 +34,7 @@
 
 #define THROW_ON_NOT_NULLPTR(pointer) \
   static_assert( \
-    rcpputils::is_pointer<std::remove_reference<decltype(pointer)>::type>::value, \
+    std::is_pointer<std::remove_reference<decltype(pointer)>::type>::value, \
     #pointer " has to be a pointer"); \
   if (pointer) { \
     throw std::runtime_error( \

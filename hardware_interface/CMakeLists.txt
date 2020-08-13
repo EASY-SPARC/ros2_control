@@ -13,7 +13,6 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(control_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(rcpputils REQUIRED)
 
 add_library(
   hardware_interface
@@ -58,7 +57,6 @@ if(BUILD_TESTING)
 
   ament_add_gmock(test_macros test/test_macros.cpp)
   target_include_directories(test_macros PRIVATE include)
-  ament_target_dependencies(test_macros rcpputils)
 
   ament_add_gmock(test_robot_hardware_interfaces test/test_robot_hardware_interface.cpp)
   target_include_directories(test_robot_hardware_interfaces PRIVATE include)
